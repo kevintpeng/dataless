@@ -11,8 +11,8 @@ module Maps
     # does the thing
     url = "https://maps.googleapis.com/maps/api/directions/json?origin=#{origin}&destination=#{destination}&key=#{ENV['MAPS_API_KEY']}&mode=#{mode}"
     jsonData = JSON.load(RestClient.get(url).body)
-    output << "Directions from #{jsonData['routes'][0]['start_address']} to #{jsonData['routes'][0]['end_address']}"
     leg = jsonData['routes'][0]['legs'][0]
+    output << "Directions from #{leg['start_address']} to #{leg['end_address']}"
     distance = leg['distance']['text']
     duration = leg['duration']['text']
     departure_time = leg['departure_time']
