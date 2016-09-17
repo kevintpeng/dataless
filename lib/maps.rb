@@ -8,6 +8,7 @@ module Maps
     destination = destination.gsub(" ", "+").gsub("_", "+")
     full_sanitizer = Rails::Html::FullSanitizer.new
     output = [];
+
     # does the thing
     url = "https://maps.googleapis.com/maps/api/directions/json?origin=#{origin}&destination=#{destination}&key=#{ENV['MAPS_API_KEY']}&mode=#{mode}"
     jsonData = JSON.load(RestClient.get(url).body)
@@ -20,7 +21,13 @@ module Maps
     output << "Duration: #{duration}" if duration
     output << "Departure Time: #{departure_time['text']}" if departure_time
     jsonData["routes"][0]["legs"].each do |e|
-      e["steps"].each_with_index{|t,i| output << "[#{i+1}/#{e["steps"].size}] In #{t['distance']['text']}, #{full_sanitizer.sanitize(t['html_instructions'])}"}
+      e["steps"].each_with_index do |t,i|
+        instruction = "[#{i+1}/#{e["steps"].size}] In #{t['distance']['text']}, #{full_sanitizer.sanitize(t['html_instructions'])}"
+        instruction << " (Leaves at #{t['transit_details']['departure_time']['text']}" if t['transit_details']
+        instruction << " from #{t['transit_details']['departure_stop']['name']}" if t['transit_details']['departure_stop']['name']
+        instruction << ")"
+        output << instruction
+      end
     end
     output
   end
