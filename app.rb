@@ -18,7 +18,7 @@ module ServerNotifications
 
     post '/incoming-sms' do
       @from = params[:From]
-      return Notifier.send_sms(@from,"Welcome to our great transit texting application") if ["hello", "Hello", "hi", "Hi"].contains params[:Body]
+      return Notifier.send_sms(@from,"Welcome to our great transit texting application") if ["hello", "Hello", "hi", "Hi"].include? params[:Body]
       puts "Incoming requesst: #{params[:Body]}"
       origin, dest = params[:Body].split(" to ")
       dest, mode = dest.split(" by ")
