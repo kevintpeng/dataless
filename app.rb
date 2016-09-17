@@ -29,7 +29,7 @@ module ServerNotifications
           sleep 5
           @message = "->"
         end
-        
+
         @message << "\n#{directions.shift}"
       end
       Notifier.send_sms(@from, @message) unless @message.empty?
@@ -37,7 +37,7 @@ module ServerNotifications
 
     get '/' do
       status 200
-      body ''
+      body 'Server is Online.'
     end
   end
 end
