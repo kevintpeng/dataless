@@ -7,6 +7,7 @@ gem 'rest-client'
 gem 'rails-html-sanitizer'
 gem 'jwt', '<=1.2'
 gem 'fuzzy-string-match'
+gem 'yelp'
 
 group :test, :development do
   gem 'rspec'
