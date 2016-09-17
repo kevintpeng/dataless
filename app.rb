@@ -14,8 +14,13 @@ module ServerNotifications
     set :root, File.dirname(__FILE__)
 
     post '/incoming-sms' do
+      puts "Incoming requesst: #{params[:Body]}"
       origin, dest = params[:Body].split(" to ")
+      dest, mode = dest.split(" by ")
       directions = Maps.directions(origin, dest)
+
+      modes = [transit, bicycling, walking, driving]
+
       @from = params[:From]
       @message = "->"
       while directions.size > 0
