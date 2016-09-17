@@ -14,8 +14,10 @@ module Maps
     output << "Directions from #{jsonData['routes'][0]['start_address']} to #{jsonData['routes'][0]['end_address']}"
     distance = jsonData['routes'][0]['legs'][0]['distance']['text']
     duration = jsonData['routes'][0]['legs'][0]['duration']['text']
-    departure_time = jsonData['routes'][0]['legs'][0]['departure_time']['text']
-    output << "Mode: #{mode}\nDistance: #{distance}\nDuration: #{duration}\nDeparture Time: #{departure_time}"
+    departure_time = jsonData['routes'][0]['legs'][0]['departure_time']
+    output << "Mode: #{mode}\nDistance: #{distance}" if distance
+    output << "Duration: #{duration}" if duration
+    output << "Departure Time: #{departure_time['text']}" if departure_time
     jsonData["routes"][0]["legs"].each do |e|
       e["steps"].each_with_index{|t,i| output << "[#{i+1}/#{e["steps"].size}] In #{t['distance']['text']}, #{full_sanitizer.sanitize(t['html_instructions'])}"}
     end
