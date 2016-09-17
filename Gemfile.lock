@@ -1,6 +1,9 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    RubyInline (3.12.4)
+      ZenTest (~> 4.3)
+    ZenTest (4.11.1)
     addressable (2.4.0)
     builder (3.2.2)
     capybara (2.8.1)
@@ -13,6 +16,8 @@ GEM
     diff-lcs (1.2.5)
     domain_name (0.5.20160826)
       unf (>= 0.0.5, < 1.0.0)
+    fuzzy-string-match (0.9.7)
+      RubyInline (>= 3.8.6)
     http-cookie (1.0.2)
       domain_name (~> 0.5)
     jwt (1.2.0)
@@ -73,6 +78,7 @@ PLATFORMS
 
 DEPENDENCIES
   capybara
+  fuzzy-string-match
   jwt (<= 1.2)
   rack-test
   rails-html-sanitizer

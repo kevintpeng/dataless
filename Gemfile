@@ -6,6 +6,7 @@ gem 'twilio-ruby'
 gem 'rest-client'
 gem 'rails-html-sanitizer'
 gem 'jwt', '<=1.2'
+gem 'fuzzy-string-match'
 
 group :test, :development do
   gem 'rspec'

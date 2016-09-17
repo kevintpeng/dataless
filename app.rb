@@ -1,6 +1,7 @@
 require 'sinatra/base'
 require_relative './lib/notifier'
 require_relative './lib/maps'
+require 'fuzzystringmatch'
 
 ENV['RACK_ENV'] ||= 'development'
 
@@ -13,13 +14,23 @@ module ServerNotifications
     set :raise_errors, false
     set :root, File.dirname(__FILE__)
 
+    jarow = FuzzyStringMatch::JaroWinkler.create( :native )
+
     post '/incoming-sms' do
       puts "Incoming requesst: #{params[:Body]}"
       origin, dest = params[:Body].split(" to ")
       dest, mode = dest.split(" by ")
-      directions = Maps.directions(origin, dest)
+      
+      if !mode.nil?
+        modes = ["transit", "bicycling", "walking", "driving"]
+        modeValues = []
+        modes.each_with_index do |modeName, index|
+          modeValues[index] = jarow.getDistance(mode , modeName)
+        end
+        mode = modes[modeValues.index(modeValues.max)]
+      end
 
-      modes = ["transit", "bicycling", "walking", "driving"]
+      directions = Maps.directions(origin, dest, mode)
 
       @from = params[:From]
       @message = "->"
