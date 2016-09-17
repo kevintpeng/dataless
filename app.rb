@@ -17,12 +17,21 @@ module ServerNotifications
     jarow = FuzzyStringMatch::JaroWinkler.create( :native )
 
     post '/incoming-sms' do
+      directions = ''
+      origin, dest = ''
       @from = params[:From]
       return Notifier.send_sms(@from,"Welcome to our great transit texting application") if ["hello", "Hello", "hi", "Hi"].include? params[:Body]
       puts "Incoming requesst: #{params[:Body]}"
-      origin, dest = params[:Body].split(" to ")
-      dest, mode = dest.split(" by ")
       
+      if params[:Body].downcase.start_with('find')
+        category, location = params[:Body].downcase.match(/(?<=find)(.*?)near(.*)/)
+        directions = Yelp.connect(category, location)
+      end
+      else
+        origin, dest = params[:Body].split(" to ")
+        dest, mode = dest.split(" by ")
+      end      
+
       if !mode.nil?
         modes = ["transit", "bicycling", "walking", "driving", "bus"]
         modeValues = []
