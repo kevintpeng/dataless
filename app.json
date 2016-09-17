@@ -1,7 +1,7 @@
 {
-  "name": "SMS Server Notifications",
+  "name": "SMS maps server",
   "description": "Server Notifications (SMS) with Twilio and Sinatra",
-  "repository": "https://github.com/TwilioDevEd/server-notifications-sinatra",
+  "repository": "https://github.com/kevintpeng/textly-4rster-directionify.io",
   "success_url": "/landing.html",
   "keywords": [
     "notifications", "server monitoring", "servers", "server automation", "automation", "sms notifications", "rails sms"
@@ -10,17 +10,17 @@
   "env": {
     "TWILIO_ACCOUNT_SID": {
       "description": "Your Twilio account secret ID, you can find at: https://www.twilio.com/user/account",
-      "value": "enter_your_account_sid_here",
+      "value": "ACaceac147c0faafcd1bcf4912a1801807",
       "required": true
     },
     "TWILIO_AUTH_TOKEN": {
       "description": "Your secret Twilio Auth token, you can find at: https://www.twilio.com/user/account",
-      "value": "enter_your_auth_token_here",
+      "value": "48b589e9af80dcae7f6932a5c84583e7",
       "required": true
     },
     "TWILIO_NUMBER": {
       "description": "The Twilio phone number you are using for this app. You can get one here: https://www.twilio.com/user/account/phone-numbers/incoming",
-      "value": "+15005550006",
+      "value": "2268940323",
       "required": true
     }
   }
