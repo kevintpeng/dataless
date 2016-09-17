@@ -4,6 +4,7 @@ source "https://rubygems.org"
 gem 'sinatra'
 gem 'twilio-ruby'
 gem 'rest-client'
+gem 'rails-html-sanitizer'
 gem 'jwt', '<=1.2'
 
 group :test, :development do
