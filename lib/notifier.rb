@@ -11,7 +11,5 @@ module Notifier
       to: phone_number,
       body: alert_message,
     )
-    puts "An SMS notifying the last application error was "\
-         "sent to #{message.to[0...-4] + "****"}"
   end
 end

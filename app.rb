@@ -15,9 +15,19 @@ module ServerNotifications
 
     post '/incoming-sms' do
       origin, dest = params[:Body].split(" to ")
-      @message = Maps.directions(origin, dest)
+      directions = Maps.directions(origin, dest)
       @from = params[:From]
-      Notifier.send_sms(@from, @message)
+      @message = "\n"
+      while directions.size > 0
+        if "#{@message}\n#{directions[0]}".length > 1500
+          Notifier.send_sms(@from,@message)
+          sleep 5
+          @message = "\n"
+        end
+        
+        @message << "\n#{directions.shift}"
+      end
+      Notifier.send_sms(@from, @message) unless @message.empty?
     end
 
     get '/' do
