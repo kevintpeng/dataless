@@ -11,5 +11,6 @@ module Notifier
       to: phone_number,
       body: alert_message,
     )
+    puts "An SMS message was sent to #{message.to[0...-4] + "****"}"
   end
 end

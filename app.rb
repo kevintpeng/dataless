@@ -17,12 +17,12 @@ module ServerNotifications
       origin, dest = params[:Body].split(" to ")
       directions = Maps.directions(origin, dest)
       @from = params[:From]
-      @message = "\n"
+      @message = "->"
       while directions.size > 0
         if "#{@message}\n#{directions[0]}".length > 1500
           Notifier.send_sms(@from,@message)
           sleep 5
-          @message = "\n"
+          @message = "->"
         end
         
         @message << "\n#{directions.shift}"
