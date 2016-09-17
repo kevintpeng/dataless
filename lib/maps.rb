@@ -12,7 +12,10 @@ module Maps
     url = "https://maps.googleapis.com/maps/api/directions/json?origin=#{origin}&destination=#{destination}&key=#{ENV['MAPS_API_KEY']}&mode=#{mode}"
     jsonData = JSON.load(RestClient.get(url).body)
     output << "Directions from #{jsonData['routes'][0]['start_address']} to #{jsonData['routes'][0]['end_address']}"
-    output << "Mode: #{mode}\nDistance: #{jsonData['routes'][0]['legs'][0]['distance']['text']}\nDuration: #{jsonData['routes'][0]['legs'][0]['duration']['text']}\nDeparture Time: #{jsonData['routes'][0]['legs'][0]['departure_time']['text']}"
+    distance = jsonData['routes'][0]['legs'][0]['distance']['text']
+    duration = jsonData['routes'][0]['legs'][0]['duration']['text']
+    departure_time = jsonData['routes'][0]['legs'][0]['departure_time']['text']
+    output << "Mode: #{mode}\nDistance: #{distance}\nDuration: #{duration}\nDeparture Time: #{departure_time}"
     jsonData["routes"][0]["legs"].each do |e|
       e["steps"].each_with_index{|t,i| output << "[#{i+1}/#{e["steps"].size}] In #{t['distance']['text']}, #{full_sanitizer.sanitize(t['html_instructions'])}"}
     end
