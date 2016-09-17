@@ -24,7 +24,7 @@ module Maps
       e["steps"].each_with_index do |t,i|
         instruction = "[#{i+1}/#{e["steps"].size}] In #{t['distance']['text']}, #{full_sanitizer.sanitize(t['html_instructions'])}"
         instruction << " (Leaves at #{t['transit_details']['departure_time']['text']}" if t['transit_details']
-        instruction << " from the stop #{t['transit_details']['departure_stop']['name']}" if t['transit_details']['departure_stop']['name']
+        instruction << " from the stop #{t['transit_details']['departure_stop']['name']}" if (t['transit_details'] || {})['departure_stop']
         instruction << ")"
         output << instruction
       end
