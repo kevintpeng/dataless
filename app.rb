@@ -19,7 +19,7 @@ module ServerNotifications
       dest, mode = dest.split(" by ")
       directions = Maps.directions(origin, dest)
 
-      modes = [transit, bicycling, walking, driving]
+      modes = ["transit", "bicycling", "walking", "driving"]
 
       @from = params[:From]
       @message = "->"
