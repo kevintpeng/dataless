@@ -1,27 +1,22 @@
-# Server notifications with Twilio, Ruby and Sinatra
+# Dataless
+Data can be expensive and unavailable in some locations. Many amazing services are reliant on the use of data to provide functionality, including Yelp and Google Maps. Our goal is to enable services for dataless users. We've created a service that allows users to make use of some of these services through the use of SMS requests, using Twilio's API.
 
-[![Build Status](https://travis-ci.org/TwilioDevEd/server-notifications-sinatra.svg?branch=master)](https://travis-ci.org/TwilioDevEd/server-notifications-sinatra)
+Requests are naturally phrased and parsed by the server to produce appropriate responses. In the following example, a request is sent to the server for the use of dataless navigation. The argument is parsed as a request for directions, and uses the Google Maps API to fetch directions:
 
-Use Twilio to send SMS alerts so that way you never miss a critical issue.
+![Example](./public/example.png)
 
-## Deploy to Heroku
+Requests can also be made to the Yelp API, by prefixing the request with the command `find`:
 
-Hit the button!
-
-[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
+![Example](./public/example2.png)
 
 ## Run the application
-
-1. Clone the repository and `cd` into it
-
-   ```bash
-   $ git clone git@github.com:TwilioDevEd/server-notifications-sinatra.git
-   $ cd  server-notifications-sinatra
-   ```
 
 1. Install the application dependencies
 
     ```bash
+    $ dev up 
+    
+    # or if computer is not dev enabled, install ruby 2.3.1 and install gems
     $ bundle install
     ```
 
@@ -55,9 +50,3 @@ That's it!
     ```bash
     $ bundle exec rake
     ```
-
-## Meta
-
-* No warranty expressed or implied. Software is as is. Diggity.
-* [MIT License](http://www.opensource.org/licenses/mit-license.html)
-* Lovingly crafted by Twilio Developer Education.
