@@ -1,4 +1,4 @@
-require 'Yelp'
+require 'yelp'
 
 module YelpAPI
   def self.connect(search_term, location)
