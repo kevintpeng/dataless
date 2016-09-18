@@ -22,10 +22,11 @@ module Maps
     output << "Departure Time: #{departure_time['text']}" if departure_time
     jsonData["routes"][0]["legs"].each do |e|
       e["steps"].each_with_index do |t,i|
-        instruction = "[#{i+1}/#{e["steps"].size}] In #{t['distance']['text']}, #{full_sanitizer.sanitize(t['html_instructions'])}"
+        instruction = "[#{i+1}/#{e["steps"].size}] #{full_sanitizer.sanitize(t['html_instructions'])}"
         instruction << " (Leaves at #{t['transit_details']['departure_time']['text']}" if t['transit_details']
         instruction << " from the stop #{t['transit_details']['departure_stop']['name']}" if (t['transit_details'] || {})['departure_stop']
         instruction << ")"
+        instruction << " for #{t['distance']['text']}."
         output << instruction
       end
     end
