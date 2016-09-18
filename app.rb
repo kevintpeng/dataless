@@ -3,11 +3,19 @@ require_relative './lib/notifier'
 require_relative './lib/maps'
 require_relative './lib/yelp_api'
 require 'fuzzystringmatch'
+require 'yelp'
 
 ENV['RACK_ENV'] ||= 'development'
 
 require 'bundler'
 Bundler.require :default, ENV['RACK_ENV'].to_sym
+
+Yelp.client.configure do |config|
+  config.consumer_key = ENV['YELP_CONSUMER_KEY']
+  config.consumer_secret = ENV['YELP_CONSUMER_SECRET']
+  config.token = ENV['YELP_TOKEN']
+  config.token_secret = ENV['YELP_TOKEN_SECRET']
+end
 
 module ServerNotifications
   class App < Sinatra::Base
