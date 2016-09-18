@@ -10,10 +10,9 @@ module Yelp
     end
     options = {}
     options[term] = search_term if search_term
-    client.search(#{location}, options)
-    all_options = []
-    results.businesses.each { |business| all_options << "#{business.rating}: #{business.name} is at #{business.location.address.join(", ")}"}
-    return all_options
+    results = client.search(location, options)
+    all_results = []
+    results.businesses.each { |business| all_results << "#{business.rating}: #{business.name} is at #{business.location.address.join(", ")}"}
+    return all_results
   end
 end
-
