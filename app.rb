@@ -19,7 +19,6 @@ module ServerNotifications
 
     post '/incoming-sms' do
       directions = ''
-      origin, dest = ''
       @from = params[:From]
       return Notifier.send_sms(@from,"Welcome to our great transit texting application") if ["hello", "Hello", "hi", "Hi"].include? params[:Body]
       puts "Incoming requesst: #{params[:Body]}"
