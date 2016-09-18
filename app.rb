@@ -25,7 +25,7 @@ module ServerNotifications
       puts "Incoming requesst: #{params[:Body]}"
 
       if params[:Body].downcase.start_with?('find')
-        _, category, location = params[:Body].downcase.match(/(?<=find)(.*?)near(.*)/)
+        _, category, location = params[:Body].downcase.match(/(?<=find)(.*?) near (.*)/).to_a
         directions = Yelp.connect(category, location)
       else
         origin, dest = params[:Body].split(" to ")
