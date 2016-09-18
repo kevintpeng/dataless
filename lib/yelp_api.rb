@@ -9,7 +9,7 @@ module YelpAPI
       config.token_secret = ENV['YELP_TOKEN_SECRET']
     end
     options = {}
-    options[term] = search_term if search_term
+    options[:term] = search_term if search_term
     results = client.search(location, options)
     all_results = []
     results.businesses.each { |business| all_results << "#{business.rating}: #{business.name} is at #{business.location.address.join(", ")}"}
