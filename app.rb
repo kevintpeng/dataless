@@ -1,7 +1,7 @@
 require 'sinatra/base'
 require_relative './lib/notifier'
 require_relative './lib/maps'
-require_relative './lib/yelp'
+require_relative './lib/yelp_api'
 require 'fuzzystringmatch'
 
 ENV['RACK_ENV'] ||= 'development'
@@ -25,7 +25,7 @@ module ServerNotifications
 
       if params[:Body].downcase.start_with?('find')
         _, category, location = params[:Body].downcase.match(/(?<=find)(.*?) near (.*)/).to_a
-        directions = Yelp.connect(category, location)
+        directions = YelpAPI.connect(category, location)
       else
         origin, dest = params[:Body].split(" to ")
         dest, mode = dest.split(" by ")
