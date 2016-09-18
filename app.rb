@@ -1,6 +1,7 @@
 require 'sinatra/base'
 require_relative './lib/notifier'
 require_relative './lib/maps'
+require_relative './lib/yelp'
 require 'fuzzystringmatch'
 
 ENV['RACK_ENV'] ||= 'development'
@@ -22,27 +23,24 @@ module ServerNotifications
       @from = params[:From]
       return Notifier.send_sms(@from,"Welcome to our great transit texting application") if ["hello", "Hello", "hi", "Hi"].include? params[:Body]
       puts "Incoming requesst: #{params[:Body]}"
-      
-      if params[:Body].downcase.start_with('find')
-        category, location = params[:Body].downcase.match(/(?<=find)(.*?)near(.*)/)
+
+      if params[:Body].downcase.start_with?('find')
+        _, category, location = params[:Body].downcase.match(/(?<=find)(.*?)near(.*)/)
         directions = Yelp.connect(category, location)
-      end
       else
         origin, dest = params[:Body].split(" to ")
         dest, mode = dest.split(" by ")
-      end      
-
-      if !mode.nil?
-        modes = ["transit", "bicycling", "walking", "driving", "bus"]
-        modeValues = []
-        modes.each_with_index do |modeName, index|
-          modeValues[index] = jarow.getDistance(mode , modeName)
+        if mode
+          modes = ["transit", "bicycling", "walking", "driving", "bus"]
+          modeValues = []
+          modes.each_with_index do |modeName, index|
+            modeValues[index] = jarow.getDistance(mode , modeName)
+          end
+          mode = modes[modeValues.index(modeValues.max)]
+          mode = "transit" if mode == "bus"
         end
-        mode = modes[modeValues.index(modeValues.max)]
-        mode = "transit" if mode == "bus"
+        directions = Maps.directions(origin, dest, mode)
       end
-
-      directions = Maps.directions(origin, dest, mode)
 
       @message = "->"
       while directions.size > 0
